@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "866585277220",
+    "project_id": "shaama-291d4",
+    "storage_bucket": "shaama-291d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866585277220:android:d27b8fad7d06041c6479b1",
+        "android_client_info": {
+          "package_name": "com.tomide.shaama"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5H5fvXPnd1SDG_gxNmBx3vXT9OllZV-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
