@@ -18,6 +18,7 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage>
     with SingleTickerProviderStateMixin {
+  final _auth = FirebaseAuth.instance;
   late AnimationController controller;
   late Animation animation;
 
@@ -521,8 +522,16 @@ class _RegistrationPageState extends State<RegistrationPage>
               RoundedButton(
                   title: 'SUBMIT',
                   colour: Colors.lightBlueAccent,
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'aa');
+                  onPressed: () async {
+                    try {
+                      final newUser =
+                          await _auth.createUserWithEmailAndPassword(
+                              email: email.toString(),
+                              password: password.toString());
+                      Navigator.pushNamed(context, 'aa');
+                    } catch (e) {
+                      //  An alert display come here
+                    }
                   }),
               RoundedButton(
                   title: 'CANCEL',
