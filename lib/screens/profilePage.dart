@@ -32,21 +32,36 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              buildMaterialButton(
-                  person: Icons.person,
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'aaaaa');
-                  }),
-              buildMaterialButton(
-                  person: FontAwesomeIcons.bookmark,
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'ac');
-                  }),
-              buildMaterialButton(
-                  person: FontAwesomeIcons.signOutAlt,
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'aa');
-                  }),
+              Column(
+                children:  [
+                  buildMaterialButton(
+                      person: Icons.person,
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'aaaaa');
+                      }),
+                const Expanded(child: Text('Profile',style: TextStyle(fontSize: 15, color: Colors.black))),
+                ],
+              ),
+              Column(
+                children: [
+                  buildMaterialButton(
+                      person: FontAwesomeIcons.bookmark,
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'ac');
+                      }),
+                  const Expanded(child: Text('Scores',style: TextStyle(fontSize: 15, color: Colors.black))),
+                ],
+              ),
+              Column(
+                children: [
+                  buildMaterialButton(
+                      person: FontAwesomeIcons.signOutAlt,
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'aa');
+                      }),
+                  const Expanded(child: Text('Exit',style: TextStyle(fontSize: 15, color: Colors.black))),
+                ],
+              ),
             ],
           ),
         ),
@@ -80,6 +95,20 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 40.0,
               ),
+              Text('Username',
+                  style: TextStyle(fontSize: 16, color: Colors.black54)),
+              Text('akayomideforGod',
+                  style: TextStyle(fontSize: 25, color: Colors.black)),
+              SizedBox(
+                height: 40.0,
+              ),
+              Text('Phone Number',
+                  style: TextStyle(fontSize: 16, color: Colors.black54)),
+              Text('09058428815',
+                  style: TextStyle(fontSize: 25, color: Colors.black)),
+              SizedBox(
+                height: 40.0,
+              ),
               Text('Region',
                   style: TextStyle(fontSize: 16, color: Colors.black54)),
               Text('Region 3',
@@ -101,17 +130,8 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 40.0,
               ),
-              Text('Phone Number',
-                  style: TextStyle(fontSize: 16, color: Colors.black54)),
-              Text('09058428815',
-                  style: TextStyle(fontSize: 25, color: Colors.black)),
-              SizedBox(
-                height: 40.0,
-              ),
-              Text('Username',
-                  style: TextStyle(fontSize: 16, color: Colors.white24)),
-              Text('akayomideforGod',
-                  style: TextStyle(fontSize: 25, color: Colors.white)),
+
+
             ],
           ),
         ),

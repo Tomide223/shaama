@@ -46,21 +46,23 @@ class _WelcomePageState extends State<WelcomePage>
             CircleAvatar(
                 radius: controller.value,
 
-                // backgroundColor: Color(0xFFFFFFFF),
+
                 foregroundImage: const AssetImage(
                   'images/RCCGa.jpg',
                 )),
-            // const SizedBox(
-            //   height: 15,
-            // ),
+
             Center(
               child: AnimatedTextKit(
                 animatedTexts: [
                   TypewriterAnimatedText(
-                    'Shamaa',
+                    'SHAAMA',
                     textStyle: kLabelHomeTextStyle.copyWith(
-                        color: Colors.indigo, fontSize: 30),
+                        color: Colors.indigo, fontSize: 45),
                   ),
+                  WavyAnimatedText( 'SHAAMA',textStyle: kLabelHomeTextStyle.copyWith(
+                      color: Colors.indigo, fontSize: 45), ),
+                  ColorizeAnimatedText('A PLACE TO TEST YOUR SUNDAY SCHOOL KNOWLEDGE', textStyle: kLabelHomeTextStyle.copyWith(
+                      color: Colors.indigo, fontSize: 25), colors: [Colors.black,Colors.blue,Colors.green,Colors.red,Colors.orange, ],speed: const Duration(milliseconds: 400))
                 ],
               ),
             ),

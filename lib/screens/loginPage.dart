@@ -42,14 +42,23 @@ class _LoginPageState extends State<LoginPage>
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              CircleAvatar(
+                  radius: controller.value,
+
+
+                  foregroundImage: const AssetImage(
+                    'images/RCCGa.jpg',
+                  )),
               Center(
                 child: AnimatedTextKit(
                   animatedTexts: [
-                    TypewriterAnimatedText(
-                      'Shamaa',
-                      textStyle: kLabelHomeTextStyle.copyWith(
-                          color: Colors.black, fontSize: 70),
-                    ),
+                    // TypewriterAnimatedText(
+                    //   'SHAAMA',
+                    //   textStyle: kLabelHomeTextStyle.copyWith(
+                    //       color: Colors.blueAccent, fontSize: 50),
+                    // ),
+                    WavyAnimatedText( 'SHAAMA',textStyle: kLabelHomeTextStyle.copyWith(
+                        color: Colors.indigo, fontSize: 45), speed: const Duration(milliseconds: 400)),
                   ],
                 ),
               ),
@@ -63,7 +72,7 @@ class _LoginPageState extends State<LoginPage>
                   username = value;
                 },
                 decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your username'),
+                    hintText: 'Enter your email'),
               ),
               kBox,
               TextField(
@@ -76,7 +85,9 @@ class _LoginPageState extends State<LoginPage>
               ),
               kBox,
               RoundedButton(
-                onPressed: () {},
+                onPressed: () {
+                  print(password);
+                },
                 colour: Colors.lightBlueAccent,
                 title: 'Log In',
               ),

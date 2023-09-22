@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 /// This is the page that register the user
 
 class RegistrationPage extends StatefulWidget {
-  RegistrationPage({
+  const RegistrationPage({
     Key? key,
   }) : super(key: key);
 
@@ -21,22 +21,22 @@ class _RegistrationPageState extends State<RegistrationPage>
   final _auth = FirebaseAuth.instance;
   late AnimationController controller;
   late Animation animation;
+   String firstName  ='';
 
-  String? firstName;
-  String? lastName;
-  String? number;
-  String? email;
-  String? password;
-  String? username;
+  String lastName = "";
+  String number="";
+  String email="";
+  String password="";
+  String username="";
   String? genT;
   String? ageT;
   // String? _regT;
   // String? _provT;
   // List<String>? regional = [];
   Object? gen;
-  String? reg;
-  String? age;
-  String? prov;
+ String reg="";
+   String? age;
+ String prov="";
 
   String frr = 'Select gender';
   String ped = 'Select province';
@@ -272,7 +272,7 @@ class _RegistrationPageState extends State<RegistrationPage>
       duration: const Duration(seconds: 5),
       vsync: this,
     );
-    animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
+    animation = ColorTween(begin: Colors.blueGrey, end: Colors.white70)
         .animate(controller);
     controller.forward();
     controller.addListener(() {
@@ -296,8 +296,27 @@ class _RegistrationPageState extends State<RegistrationPage>
           // padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 90),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+    //           CircleAvatar(
+    //               radius: controller.value,
+    //
+    //
+    //               foregroundImage: const AssetImage(
+    //                 'images/RCCGa.jpg',
+    //               )),
+    // Center(
+    // child: AnimatedTextKit(
+    // animatedTexts: [
+    // // TypewriterAnimatedText(
+    // // 'SHAAMA',
+    // // textStyle: kLabelHomeTextStyle.copyWith(
+    // // color: Colors.indigo, fontSize: 45),
+    // // ),
+    // FadeAnimatedText('SHAAMA',textStyle: kLabelHomeTextStyle.copyWith(
+    //     color: Colors.indigo, fontSize: 45),)
+    // ]
+    // ),),
               const Center(
                 child: Text(
                   "Create an account ",
@@ -307,8 +326,7 @@ class _RegistrationPageState extends State<RegistrationPage>
               kBox,
               buildTextField(
                   type: TextInputType.text,
-                  fill: 'Enter your first name',
-                  full: firstName),
+                  fill: 'Enter your first name', full: firstName),
               kBox,
               buildTextField(
                   type: TextInputType.text,
@@ -526,16 +544,18 @@ class _RegistrationPageState extends State<RegistrationPage>
                     try {
                       final newUser =
                           await _auth.createUserWithEmailAndPassword(
-                              email: email.toString(),
-                              password: password.toString());
-                      Navigator.pushNamed(context, 'aa');
+                              email: email,
+                              password: password);
+
+                      Navigator.pushNamed(context,'aa');
                     } catch (e) {
                       //  An alert display come here
+                      print(e);
                     }
                   }),
               RoundedButton(
                   title: 'CANCEL',
-                  colour: Colors.lightBlueAccent,
+                  colour: Colors.redAccent,
                   onPressed: () {})
             ],
           ),
@@ -546,7 +566,7 @@ class _RegistrationPageState extends State<RegistrationPage>
 
   TextField buildTextField(
       {required String fill,
-      required String? full,
+      required String full,
       required TextInputType type}) {
     return TextField(
         style: const TextStyle(
