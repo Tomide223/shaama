@@ -21,9 +21,7 @@ class _LoginPageState extends State<LoginPage>
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: const Duration(seconds: 5),
-      vsync: this,
-    );
+        duration: const Duration(seconds: 4), vsync: this, upperBound: 180.0);
     animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
         .animate(controller);
     controller.forward();
