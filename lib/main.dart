@@ -7,6 +7,7 @@ import 'package:shaama/screens/welcomePage.dart';
 import 'package:shaama/screens/loginPage.dart';
 import 'package:shaama/screens/afirstPage.dart';
 import 'package:shaama/screens/scoreScreen.dart';
+import 'package:shaama/screens/resultScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: 'aaa',
+      initialRoute: 'ar',
       routes: {
         'a': (context) => const RegistrationPage(),
         'aa': (context) => const Homepage(),
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         'ab': (context) => const QuizPageA(),
         'ad': (context) => const AboutDcePage(),
         'ac': (context) => const ScoreScreen(),
+        'ar': (context) => const ResultPage(),
       },
     );
   }

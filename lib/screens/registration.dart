@@ -4,6 +4,8 @@ import 'package:shaama/components/constants.dart';
 // import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:shaama/components/dropDown.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 /// This is the page that register the user
 
@@ -21,27 +23,30 @@ class _RegistrationPageState extends State<RegistrationPage>
   final _auth = FirebaseAuth.instance;
   late AnimationController controller;
   late Animation animation;
-   String firstName  ='';
+  bool spin = false;
+   late String firstName;
 
-  String lastName = "";
-  String number="";
-  String email="";
-  String password="";
-  String username="";
+ late String lastName;
+ late String number;
+  late String email;
+ late String password;
+ late String username;
+  late String parish;
   String? genT;
   String? ageT;
   // String? _regT;
   // String? _provT;
   // List<String>? regional = [];
   Object? gen;
- String reg="";
+late String reg;
    String? age;
- String prov="";
+ late String prov;
 
   String frr = 'Select gender';
   String ped = 'Select province';
   String pad = 'Select Region';
   String cat = 'Select category';
+
 
   // final Map<String, List<String>> _provinceByRegion = {
   //   'Region 1': [
@@ -290,14 +295,17 @@ class _RegistrationPageState extends State<RegistrationPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: animation.value,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 38, right: 28, top: 88),
-          // padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 90),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+      body: ModalProgressHUD(
+        color: Colors.blueAccent,
+        inAsyncCall: spin,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 38, right: 28, top: 88),
+            // padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 90),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
     //           CircleAvatar(
     //               radius: controller.value,
     //
@@ -317,247 +325,350 @@ class _RegistrationPageState extends State<RegistrationPage>
     //     color: Colors.indigo, fontSize: 45),)
     // ]
     // ),),
-              const Center(
-                child: Text(
-                  "Create an account ",
-                  style: TextStyle(fontSize: 29),
-                ),
-              ),
-              kBox,
-              buildTextField(
-                  type: TextInputType.text,
-                  fill: 'Enter your first name', full: firstName),
-              kBox,
-              buildTextField(
-                  type: TextInputType.text,
-                  fill: 'Enter your last name',
-                  full: lastName),
-              kBox,
-
-              Container(
-                height: 50,
-                foregroundDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: const Border(
-                        top: BorderSide(
-                            color: Colors.lightBlueAccent, width: 2.0),
-                        left: BorderSide(
-                            color: Colors.lightBlueAccent, width: 2.0),
-                        bottom: BorderSide(
-                            color: Colors.lightBlueAccent, width: 2.0),
-                        right: BorderSide(
-                            color: Colors.lightBlueAccent, width: 2.0))),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 9, top: 20),
-                  child: DropdownButton(
-                    alignment: AlignmentDirectional.center,
-                    hint: Text(frr),
-                    dropdownColor: Colors.white,
-                    items: gender
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item!,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ))
-                        .toList(),
-                    value: gen,
-                    onChanged: (value) {
-                      gen = value as String;
-                      setState(() {
-                        gen = value;
-                      });
-                      if (gen == "Male") {
-                        genT = 'Male';
-                      }
-                      if (gen == "Female") {
-                        genT = 'Male';
-                      }
-                    },
+                const Center(
+                  child: Text(
+                    "Create an account ",
+                    style: TextStyle(fontSize: 29),
                   ),
                 ),
-              ),
-              kBox,
-              buildTextField(
-                  type: TextInputType.number,
-                  fill: 'Enter your Phone Number',
-                  full: number),
-              kBox,
-              buildTextField(
-                  type: TextInputType.emailAddress,
-                  fill: 'Enter your email address',
-                  full: email),
-              kBox,
-              buildTextField(
-                  type: TextInputType.text,
-                  fill: 'Create your username',
-                  full: username),
-              kBox,
-              TextField(
-                obscureText: true,
-                onChanged: (value) {
-                  password = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                  hintText: 'Enter a password',
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                kBox,
+                TextField(
+                  keyboardType: TextInputType.text,
+                  showCursor: true,
+                  textInputAction: TextInputAction.done,
+                  onChanged: (value) {
+                    firstName = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter your first name',enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  ),
+                  ),),
                 ),
-              ),
-              kBox,
-              Container(
-                height: 50,
-                foregroundDecoration: BoxDecoration(
-                    // I changed the circular radius from 10 to 5
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: const Border(
-                        top: BorderSide(
-                            color: Colors.lightBlueAccent, width: 2.0),
-                        right: BorderSide(
-                            color: Colors.lightBlueAccent, width: 2.0),
-                        left: BorderSide(
-                            color: Colors.lightBlueAccent, width: 2.0),
-                        bottom: BorderSide(
-                            color: Colors.lightBlueAccent, width: 2.0))),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 7, top: 20),
-                  child: DropdownButton<String>(
-                    alignment: AlignmentDirectional.center,
-                    hint: Text(cat),
-                    dropdownColor: Colors.white,
-                    items: ageBracket
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item!,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
+
+                kBox,
+                TextField(
+                  keyboardType: TextInputType.text,
+                  showCursor: true,
+                  textInputAction: TextInputAction.done,
+                  onChanged: (value) {
+                    lastName = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter your last name',enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),),
+                ),
+
+                kBox,
+
+                Container(
+                  height: 50,
+                  foregroundDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: const Border(
+                          top: BorderSide(
+                              color: Colors.lightBlueAccent, width: 2.0),
+                          left: BorderSide(
+                              color: Colors.lightBlueAccent, width: 2.0),
+                          bottom: BorderSide(
+                              color: Colors.lightBlueAccent, width: 2.0),
+                          right: BorderSide(
+                              color: Colors.lightBlueAccent, width: 2.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 9, top: 20),
+                    child: DropdownButton(
+                      alignment: AlignmentDirectional.center,
+                      hint: Text(frr),
+                      dropdownColor: Colors.white,
+                      items: gender
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item!,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ))
-                        .toList(),
-                    value: age,
-                    onChanged: (value) {
-                      setState(() {
-                        age = value;
-                      });
-                      if (age == "Adult") {
-                        ageT = 'Adult';
-                      }
-                      if (age == "YAYA") {
-                        ageT = 'YAYA';
-                      }
-                      if (age == "Teenager") {
-                        ageT = 'Teenager';
-                      }
-                    },
+                              ))
+                          .toList(),
+                      value: gen,
+                      onChanged: (value) {
+                        gen = value as String;
+                        setState(() {
+                          gen = value;
+                        });
+                        if (gen == "Male") {
+                          genT = 'Male';
+                        }
+                        if (gen == "Female") {
+                          genT = 'Male';
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-              kBox,
-              buildTextField(
-                  type: TextInputType.text,
-                  fill: 'Enter Region e.g Region 1',
-                  full: reg),
-              kBox,
+                kBox,
+                TextField(
+                  keyboardType: TextInputType.number,
+                  showCursor: true,
+                  textInputAction: TextInputAction.done,
+                  onChanged: (value) {
+                    number = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter your Phone Number',enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),),
+                ),
 
-              buildTextField(
-                  type: TextInputType.text,
-                  fill: 'Enter Province e.g Lagos Province 17',
-                  full: prov),
-              kBox,
-              buildTextField(
-                  type: TextInputType.text,
-                  fill: "Enter Parish e.g King's Court Parish",
-                  full: prov),
-              kBox,
-              // DropdownButton<String>(
-              //   hint: Text(pad),
-              //   dropdownColor: Colors.white,
-              //   items: region.map<DropdownMenuItem<String>>((item) {
-              //     return DropdownMenuItem<String>(
-              //       value: item,
-              //       child: Text(
-              //         item,
-              //         style: const TextStyle(
-              //           fontSize: 18,
-              //           fontWeight: FontWeight.bold,
-              //           color: Colors.black,
-              //         ),
-              //         overflow: TextOverflow.ellipsis,
-              //       ),
-              //     );
-              //   }).toList(),
-              //   value: reg,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       reg = value!;
-              //       _regT = reg;
-              //
-              //       prov;
-              //     });
-              //   },
-              // ),
-              // // kBox,
-              //
-              // DropdownButton<String>(
-              //     alignment: AlignmentDirectional.center,
-              //     hint: Text(ped),
-              //     dropdownColor: Colors.lightBlueAccent,
-              //     items: _provinceByRegion[reg]
-              //         ?.map((item) => DropdownMenuItem<String>(
-              //               value: item,
-              //               child: Text(
-              //                 item,
-              //                 style: const TextStyle(
-              //                   fontSize: 18,
-              //                   fontWeight: FontWeight.bold,
-              //                   color: Colors.black,
-              //                 ),
-              //                 overflow: TextOverflow.ellipsis,
-              //               ),
-              //             ))
-              //         .toList(),
-              //     value: prov,
-              //     onChanged: (value) {
-              //       setState(() {
-              //         prov = value!;
-              //       });
-              //     }),
-              // kBox,
-              RoundedButton(
-                  title: 'SUBMIT',
-                  colour: Colors.lightBlueAccent,
-                  onPressed: () async {
-                    try {
-                      final newUser =
-                          await _auth.createUserWithEmailAndPassword(
-                              email: email,
-                              password: password);
+                kBox,
+                TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  showCursor: true,
+                  textInputAction: TextInputAction.done,
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter your email',enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),),
+                ),
 
-                      Navigator.pushNamed(context,'aa');
-                    } catch (e) {
-                      //  An alert display come here
-                      print(e);
-                    }
-                  }),
-              RoundedButton(
-                  title: 'CANCEL',
-                  colour: Colors.redAccent,
-                  onPressed: () {})
-            ],
+                kBox,
+                TextField(
+                  keyboardType: TextInputType.text,
+                  showCursor: true,
+                  textInputAction: TextInputAction.done,
+                  onChanged: (value) {
+                    username = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Create your username',enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),),
+                ),
+
+                kBox,
+                TextField(
+                  obscureText: true,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                    hintText: 'Enter a password',
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                  ),
+                ),
+                kBox,
+                Container(
+                  height: 50,
+                  foregroundDecoration: BoxDecoration(
+                      // I changed the circular radius from 10 to 5
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: const Border(
+                          top: BorderSide(
+                              color: Colors.lightBlueAccent, width: 2.0),
+                          right: BorderSide(
+                              color: Colors.lightBlueAccent, width: 2.0),
+                          left: BorderSide(
+                              color: Colors.lightBlueAccent, width: 2.0),
+                          bottom: BorderSide(
+                              color: Colors.lightBlueAccent, width: 2.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 7, top: 20),
+                    child: DropdownButton<String>(
+                      alignment: AlignmentDirectional.center,
+                      hint: Text(cat),
+                      dropdownColor: Colors.white,
+                      items: ageBracket
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item!,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
+                          .toList(),
+                      value: age,
+                      onChanged: (value) {
+                        setState(() {
+                          age = value;
+                        });
+                        if (age == "Adult") {
+                          ageT = 'Adult';
+                        }
+                        if (age == "YAYA") {
+                          ageT = 'YAYA';
+                        }
+                        if (age == "Teenager") {
+                          ageT = 'Teenager';
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                kBox,
+                TextField(
+                  keyboardType: TextInputType.text,
+                  showCursor: true,
+                  textInputAction: TextInputAction.done,
+                  onChanged: (value) {
+                    reg = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter Region e.g Region 1',enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),),
+                ),
+
+                kBox,
+                TextField(
+                  keyboardType: TextInputType.text,
+                  showCursor: true,
+                  textInputAction: TextInputAction.done,
+                  onChanged: (value) {
+                    prov = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter Province e.g Lagos Province 17', enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),),
+                ),
+
+                kBox,
+                TextField(
+                  keyboardType: TextInputType.text,
+                  showCursor: true,
+                  textInputAction: TextInputAction.done,
+                  onChanged: (value) {
+                    parish = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: "Enter Parish e.g King's Court Parish", enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),),
+
+                ),
+
+                kBox,
+                // DropdownButton<String>(
+                //   hint: Text(pad),
+                //   dropdownColor: Colors.white,
+                //   items: region.map<DropdownMenuItem<String>>((item) {
+                //     return DropdownMenuItem<String>(
+                //       value: item,
+                //       child: Text(
+                //         item,
+                //         style: const TextStyle(
+                //           fontSize: 18,
+                //           fontWeight: FontWeight.bold,
+                //           color: Colors.black,
+                //         ),
+                //         overflow: TextOverflow.ellipsis,
+                //       ),
+                //     );
+                //   }).toList(),
+                //   value: reg,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       reg = value!;
+                //       _regT = reg;
+                //
+                //       prov;
+                //     });
+                //   },
+                // ),
+                // // kBox,
+                //
+                // DropdownButton<String>(
+                //     alignment: AlignmentDirectional.center,
+                //     hint: Text(ped),
+                //     dropdownColor: Colors.lightBlueAccent,
+                //     items: _provinceByRegion[reg]
+                //         ?.map((item) => DropdownMenuItem<String>(
+                //               value: item,
+                //               child: Text(
+                //                 item,
+                //                 style: const TextStyle(
+                //                   fontSize: 18,
+                //                   fontWeight: FontWeight.bold,
+                //                   color: Colors.black,
+                //                 ),
+                //                 overflow: TextOverflow.ellipsis,
+                //               ),
+                //             ))
+                //         .toList(),
+                //     value: prov,
+                //     onChanged: (value) {
+                //       setState(() {
+                //         prov = value!;
+                //       });
+                //     }),
+                // kBox,
+                RoundedButton(
+                    title: 'SUBMIT',
+                    colour: Colors.lightBlueAccent,
+                    onPressed: () async {
+                      setState(() {
+                        spin = true;
+                      });
+                      try {
+                        final newUser =
+                            await _auth.createUserWithEmailAndPassword(
+                                email: email,
+                                password: password);
+                        setState(() {
+                          spin = false;
+                        });
+                        Navigator.pushNamed(context,'aaaa');
+
+                      } catch (e) {
+                        //  An alert display come here
+                        Alert(
+                          context: context,
+                          title: 'ERROR!',
+                          desc:
+                          'Invalid email or password',
+                          buttons: [
+                            DialogButton(
+                                child: const Text(
+                                  'Try again',
+                                  style: kLabelTextStyle,
+                                ),
+                                onPressed:(){
+                                  Navigator.pop(context);
+                                }),],);
+                      }
+                    }),
+                RoundedButton(
+                    title: 'CANCEL',
+                    colour: Colors.redAccent,
+                    onPressed: () {
+
+                    })
+              ],
+            ),
           ),
         ),
       ),
@@ -566,7 +677,7 @@ class _RegistrationPageState extends State<RegistrationPage>
 
   TextField buildTextField(
       {required String fill,
-      required String full,
+        String? full,
       required TextInputType type}) {
     return TextField(
         style: const TextStyle(

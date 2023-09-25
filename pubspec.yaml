@@ -43,6 +43,10 @@ dependencies:
   firebase_auth: ^4.10.0
   firebase_storage: ^11.2.7
   firebase_core_platform_interface: 4.8.0
+  firebase_core: ^2.16.0
+  rflutter_alert: ^2.0.7
+  modal_progress_hud_nsn: ^0.4.0
+
 
 dev_dependencies:
   flutter_test:

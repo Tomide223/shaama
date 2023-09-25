@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:rshama/components/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shaama/components/customIcon.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({
@@ -13,6 +14,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final _auth = FirebaseAuth.instance;
   // var name;
 
   @override
@@ -57,9 +59,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   buildMaterialButton(
                       person: FontAwesomeIcons.signOutAlt,
                       onPressed: () {
-                        Navigator.pushNamed(context, 'aa');
+                        _auth.signOut();
+                        Navigator.pushNamed(context, 'aaa');
                       }),
-                  const Expanded(child: Text('Exit',style: TextStyle(fontSize: 15, color: Colors.black))),
+                  const Expanded(child: Text('Logout',style: TextStyle(fontSize: 15, color: Colors.black))),
                 ],
               ),
             ],

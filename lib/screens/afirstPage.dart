@@ -10,7 +10,7 @@ import 'package:shaama/components/Option_Q1.dart';
 import 'package:shaama/components/identifiers.dart';
 import 'package:shaama/components/calculator.dart';
 import 'package:shaama/components/dropDown.dart';
-// import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shaama/components/UserpickedAnswerList.dart';
 
 import 'package:shaama/components/testing.dart';
@@ -132,11 +132,11 @@ class _QuizPageState extends State<QuizPageA> {
       scorekeeper.add(0);
     }
     if (userPickedAnswer == null) {
-      // Alert(
-      //   context: context,
-      //   title: 'Warning!',
-      //   desc: 'No answer was selected!',
-      // ).show();
+      Alert(
+        context: context,
+        title: 'Warning!',
+        desc: 'No answer was selected!',
+      ).show();
     }
   }
 
@@ -268,11 +268,11 @@ class _QuizPageState extends State<QuizPageA> {
                           onPressed: () {
                             setState(() {
                               if (grain[g].isNotEnough() == true) {
-                                // Alert(
-                                //   context: context,
-                                //   title: 'Warning!',
-                                //   desc: 'You\'ve reached the start of the quiz',
-                                // ).show();
+                                Alert(
+                                  context: context,
+                                  title: 'Warning!',
+                                  desc: 'You\'ve reached the start of the quiz',
+                                ).show();
                               } else if (grain[g].isTwenty() == true) {
                                 prev--;
                                 unCheckAnswer(true);
